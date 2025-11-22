@@ -1,0 +1,107 @@
+mysql> show tables;
++----------------+
+| Tables_in_bms1 |
++----------------+
+| accounts       |
+| admin          |
+| customers      |
+| ifsc           |
+| loans          |
+| transactions   |
+| transfer_funds |
++----------------+
+7 rows in set (0.02 sec)
+
+mysql> select * from ifsc;
++-------------+----------------+
+| ifsc_code   | branch         |
++-------------+----------------+
+| BMSN0000847 | Hyderabad Main |
+| BMSN0001879 | Charminar      |
+| BMSN0011744 | Mehdipatnam    |
+| BMSN0032241 | Kukatpally     |
+| BMSN0040479 | Banjara Hills  |
++-------------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from admin;
++------+-----------+------+
+| a_id | name      | pin  |
++------+-----------+------+
+|  101 | Deepali   | 1006 |
+|  102 | Bharadwaj | 2580 |
++------+-----------+------+
+2 rows in set (0.04 sec)
+
+mysql> desc accounts; 
++-----------------------+---------------+------+-----+---------+----------------+
+| Field                 | Type          | Null | Key | Default | Extra          |
++-----------------------+---------------+------+-----+---------+----------------+
+| acc_no                | bigint        | NO   | PRI | NULL    | auto_increment |
+| ifsc_code             | varchar(15)   | YES  | MUL | NULL    |                |
+| branch                | varchar(20)   | YES  |     | NULL    |                |
+| acc_type              | varchar(20)   | YES  |     | NULL    |                |
+| balance               | decimal(10,2) | YES  |     | NULL    |                |
+| l_id                  | bigint        | YES  |     | NULL    |                |
+| interest_rate         | decimal(5,2)  | YES  |     | 3.50    |                |
+| last_interest_date    | date          | YES  |     | NULL    |                |
+| total_interest_earned | decimal(12,2) | YES  |     | 0.00    |                |
+| a_status              | varchar(40)   | YES  |     | active  |                |
++-----------------------+---------------+------+-----+---------+----------------+
+11 rows in set (0.01 sec)
+
+mysql> desc customers;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| c_id   | bigint      | NO   | PRI | NULL    | auto_increment |
+| c_name | varchar(40) | NO   |     | NULL    |                |
+| acc_no | bigint      | YES  | MUL | NULL    |                |
+| dob    | date        | YES  |     | NULL    |                |
+| city   | varchar(40) | YES  |     | NULL    |                |
+| mobile | bigint      | NO   |     | NULL    |                |
+| email  | varchar(40) | YES  |     | NULL    |                |
+| c_pin  | int         | NO   |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> desc transactions;
++-----------+---------------+------+-----+-------------------+-------------------+
+| Field     | Type          | Null | Key | Default           | Extra             |
++-----------+---------------+------+-----+-------------------+-------------------+
+| t_id      | bigint        | NO   | PRI | NULL              | auto_increment    |
+| acc_no    | bigint        | YES  | MUL | NULL              |                   |
+| amount    | decimal(10,2) | YES  |     | NULL              |                   |
+| type      | varchar(100)  | YES  |     | NULL              |                   |
+| c_balance | decimal(10,2) | YES  |     | NULL              |                   |
+| t_time    | timestamp     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------+---------------+------+-----+-------------------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql> desc loans;
++-----------------+---------------+------+-----+---------+----------------+
+| Field           | Type          | Null | Key | Default | Extra          |
++-----------------+---------------+------+-----+---------+----------------+
+| l_id            | bigint        | NO   | PRI | NULL    | auto_increment |
+| acc_no          | bigint        | YES  | MUL | NULL    |                |
+| l_type          | varchar(40)   | YES  |     | NULL    |                |
+| l_amount        | decimal(10,2) | YES  |     | NULL    |                |
+| interest_amount | decimal(10,2) | YES  |     | NULL    |                |
+| duration        | int           | YES  |     | NULL    |                |
+| status          | varchar(20)   | YES  |     | NULL    |                |
+| total_paid      | decimal(12,2) | YES  |     | 0.00    |                |
+| emi             | decimal(12,2) | NO   |     | 0.00    |                |
++-----------------+---------------+------+-----+---------+----------------+
+9 rows in set (0.00 sec)
+
+mysql> desc transfer_funds;
++-----------------+---------------+------+-----+-------------------+-------------------+
+| Field           | Type          | Null | Key | Default           | Extra             |
++-----------------+---------------+------+-----+-------------------+-------------------+
+| tf_id           | bigint        | NO   | PRI | NULL              | auto_increment    |
+| sender_acc_no   | bigint        | NO   | MUL | NULL              |                   |
+| receiver_acc_no | bigint        | NO   | MUL | NULL              |                   |
+| transfer_amount | decimal(10,2) | NO   |     | NULL              |                   |
+| transfer_date   | timestamp     | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-----------------+---------------+------+-----+-------------------+-------------------+
+5 rows in set (0.00 sec)
